@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teste de Inflamação | Portal InLuz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fdf8f2;
+      --dark: #1a1207;
+      --gold: #c9a84c;
+      --gold-light: #e8cfa0;
+      --sage: #7a9e7e;
+      --sage-light: #ccdece;
+      --terracota: #c4714a;
+      --terracota-light: #f0d2c4;
+      --rose: #b5697a;
+      --rose-light: #f0dde2;
+      --bg: #f9f4ee;
+      --white: #ffffff;
+      --shadow: rgba(26,18,7,0.10);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #1a1207 0%, #3a2710 60%, #5a3a1a 100%);
+      padding: 70px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Lato', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 40px;
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--gold); font-weight: 600; }
+    .hero p {
+      color: #c8b89a;
+      font-size: 16px;
+      font-weight: 300;
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .hero-divider span { height: 1px; width: 60px; background: var(--gold); opacity: .4; display: block; }
+    .hero-divider i { color: var(--gold); font-size: 14px; }
+
+    /* ─── PROGRESS ─── */
+    .progress-wrap {
+      background: var(--white);
+      padding: 20px 24px;
+      border-bottom: 1px solid #ede6dc;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .progress-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .progress-count { font-size: 13px; color: #888; }
+    .progress-bar-bg {
+      height: 5px;
+      background: #ede6dc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--terracota));
+      border-radius: 10px;
+      transition: width .5s ease;
+      width: 0%;
+    }
+
+    /* ─── CONTAINER ─── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ─── QUESTION CARD ─── */
+    .question-card {
+      display: none;
+      animation: fadeSlide .4s ease;
+    }
+    .question-card.active { display: block; }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .q-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .q-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .q-subtitle {
+      font-size: 14px;
+      color: #888;
+      font-weight: 300;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* ─── OPTIONS ─── */
+    .options { display: flex; flex-direction: column; gap: 12px; }
+
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      background: var(--white);
+      border: 1.5px solid #e8dfd3;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all .25s ease;
+      text-align: left;
+      width: 100%;
+      font-family: 'Lato', sans-serif;
+    }
+    .option-btn:hover {
+      border-color: var(--gold);
+      background: #fefaf5;
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(201,168,76,.12);
+    }
+    .option-btn.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #fefaf5, #fdf3e1);
+      box-shadow: 0 4px 20px rgba(201,168,76,.2);
+    }
+    .option-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #d4c9b8;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .option-btn.selected .option-dot {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+    .option-btn.selected .option-dot::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      display: block;
+    }
+    .option-text { flex: 1; }
+    .option-label {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--dark);
+      display: block;
+      line-height: 1.4;
+    }
+    .option-desc {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 3px;
+      display: block;
+      font-weight: 300;
+    }
+
+    /* ─── TONGUE CARD ─── */
+    .tongue-card {
+      background: linear-gradient(135deg, #fdf8f2, #fff9f0);
+      border: 1.5px solid #e8dfd3;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .tongue-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .tongue-subtitle {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .tongue-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 500px) { .tongue-grid { grid-template-columns: 1fr; } }
+
+    .tongue-opt {
+      padding: 14px 16px;
+      border: 1.5px solid #e8dfd3;
+      border-radius: 12px;
+      cursor: pointer;
+      background: var(--white);
+      transition: all .2s;
+      text-align: left;
+    }
+    .tongue-opt:hover { border-color: var(--gold); background: #fefaf5; }
+    .tongue-opt.selected { border-color: var(--gold); background: linear-gradient(135deg, #fefaf5, #fdf3e1); }
+    .tongue-emoji { font-size: 22px; margin-bottom: 6px; display: block; }
+    .tongue-name { font-size: 13px; font-weight: 700; color: var(--dark); display: block; margin-bottom: 3px; }
+    .tongue-meaning { font-size: 11px; color: #aaa; display: block; line-height: 1.4; }
+
+    /* ─── NAV BUTTONS ─── */
+    .nav-btns {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      justify-content: space-between;
+    }
+    .btn-back {
+      padding: 14px 28px;
+      border: 1.5px solid #d4c9b8;
+      background: transparent;
+      border-radius: 50px;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: #888;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-back:hover { border-color: var(--dark); color: var(--dark); }
+    .btn-next {
+      padding: 14px 36px;
+      background: linear-gradient(135deg, var(--gold), #a8813a);
+      border: none;
+      border-radius: 50px;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--white);
+      cursor: pointer;
+      transition: all .25s;
+      box-shadow: 0 6px 20px rgba(201,168,76,.3);
+      flex: 1;
+      max-width: 240px;
+      margin-left: auto;
+    }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,168,76,.4); }
+    .btn-next:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+    /* ─── RESULT ─── */
+    #result { display: none; }
+
+    .result-hero {
+      text-align: center;
+      padding: 50px 0 36px;
+    }
+    .result-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      position: relative;
+    }
+    .result-circle::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px dashed;
+      opacity: .3;
+    }
+    .result-score { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; line-height: 1; }
+    .result-max { font-size: 13px; font-weight: 300; margin-top: 2px; opacity: .7; }
+    .result-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 600; margin-bottom: 12px; }
+    .result-desc { font-size: 16px; color: #666; max-width: 500px; margin: 0 auto; line-height: 1.8; font-weight: 300; }
+
+    /* níveis de cor */
+    .level-low    .result-circle { background: #f0f8f1; }
+    .level-low    .result-circle::before { border-color: var(--sage); }
+    .level-low    .result-score  { color: var(--sage); }
+    .level-low    .result-title  { color: var(--sage); }
+
+    .level-mod    .result-circle { background: #fdf8ec; }
+    .level-mod    .result-circle::before { border-color: var(--gold); }
+    .level-mod    .result-score  { color: var(--gold); }
+    .level-mod    .result-title  { color: var(--gold); }
+
+    .level-high   .result-circle { background: #fdf2ec; }
+    .level-high   .result-circle::before { border-color: var(--terracota); }
+    .level-high   .result-score  { color: var(--terracota); }
+    .level-high   .result-title  { color: var(--terracota); }
+
+    .level-alarm  .result-circle { background: #fdf0f3; }
+    .level-alarm  .result-circle::before { border-color: var(--rose); }
+    .level-alarm  .result-score  { color: var(--rose); }
+    .level-alarm  .result-title  { color: var(--rose); }
+
+    /* blocos de resultado */
+    .result-blocks { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+
+    .r-block {
+      background: var(--white);
+      border: 1.5px solid #ede6dc;
+      border-radius: 16px;
+      padding: 22px 24px;
+    }
+    .r-block-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .r-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .r-block-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; }
+    .r-block p { font-size: 14px; color: #666; line-height: 1.8; font-weight: 300; }
+    .r-block ul { padding-left: 18px; }
+    .r-block ul li { font-size: 14px; color: #666; line-height: 1.9; font-weight: 300; }
+
+    .tongue-result-box {
+      background: linear-gradient(135deg, #fdf8f2, #fff9f0);
+      border: 1.5px solid var(--gold-light);
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin-top: 16px;
+    }
+    .tongue-result-box h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    .tongue-result-box p { font-size: 14px; color: #666; line-height: 1.8; font-weight: 300; }
+
+    .cta-box {
+      background: linear-gradient(135deg, #1a1207, #3a2710);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      margin-top: 36px;
+      color: var(--cream);
+    }
+    .cta-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .cta-box p { font-size: 15px; color: #c8b89a; line-height: 1.7; margin-bottom: 24px; font-weight: 300; }
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--gold), #a8813a);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(201,168,76,.4);
+      transition: all .25s;
+    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(201,168,76,.5); }
+
+    .disclaimer {
+      background: #f5f0ea;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin-top: 32px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    /* footer */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 12px;
+      color: #bbb;
+      border-top: 1px solid #ede6dc;
+    }
+    footer strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-badge">Portal InLuz · Saúde Feminina</div>
+  <h1>Seu corpo está<br/><span>inflamado?</span></h1>
+  <p>Responda 10 perguntas e descubra o seu nível de inflamação silenciosa — com leitura ayurvédica da língua incluída.</p>
+  <div class="hero-divider">
+    <span></span>
+    <i>✦</i>
+    <span></span>
+  </div>
+</div>
+
+<!-- ═══ PROGRESS ═══ -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-top">
+    <span class="progress-label">Seu progresso</span>
+    <span class="progress-count" id="progressCount">0 de 10</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div class="container">
+  <div id="quiz">
+
+    <!-- PERGUNTA 1 -->
+    <div class="question-card active" data-q="1">
+      <div class="q-number">Pergunta 01 / 10</div>
+      <div class="q-title">Como está seu nível de energia e disposição no dia a dia?</div>
+      <div class="q-subtitle">Avalie como você se sente na maior parte dos dias, não em dias excepcionais.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Energia ótima e constante ao longo do dia</span>
+            <span class="option-desc">Acordo bem, mantenho o foco e termino o dia sem exaustão</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Cansaço leve à tarde, mas recupero rápido</span>
+            <span class="option-desc">Pequena queda de energia depois do almoço</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Cansaço frequente, preciso de esforço para as tarefas</span>
+            <span class="option-desc">Sinto que não tenho combustível mesmo dormindo</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Exaustão profunda e persistente, mesmo após dormir</span>
+            <span class="option-desc">Acordo cansada e o cansaço não passa durante o dia</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-next" id="next1" disabled onclick="nextQuestion(1)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 2 -->
+    <div class="question-card" data-q="2">
+      <div class="q-number">Pergunta 02 / 10</div>
+      <div class="q-title">Como está sua digestão e saúde intestinal?</div>
+      <div class="q-subtitle">O intestino é o centro do sistema imunológico — e um dos primeiros sinais de inflamação aparece aqui.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Intestino regular, sem inchaço ou gases</span>
+            <span class="option-desc">Evacuo diariamente sem desconforto</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Inchaço ocasional após certas refeições</span>
+            <span class="option-desc">Algum gás ou distensão eventualmente</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Inchaço frequente, alternância constipação/diarreia</span>
+            <span class="option-desc">Fico dias sem evacuar ou o intestino é muito irregular</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Dores abdominais, muito inchaço, disfunções graves</span>
+            <span class="option-desc">Problema intestinal crônico ou já diagnosticado</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(2)">← Voltar</button>
+        <button class="btn-next" id="next2" disabled onclick="nextQuestion(2)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 3 -->
+    <div class="question-card" data-q="3">
+      <div class="q-number">Pergunta 03 / 10</div>
+      <div class="q-title">Você sente dores, rigidez ou inchaço nas articulações?</div>
+      <div class="q-subtitle">Articulações inflamadas são um dos sinais mais claros de inflamação sistêmica no organismo.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Nenhuma dor ou rigidez articular</span>
+            <span class="option-desc">Movimentos livres e sem desconforto</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Rigidez leve ao acordar, passa em minutos</span>
+            <span class="option-desc">Articulações que estalam ocasionalmente</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Dores frequentes em articulações, especialmente após exercício</span>
+            <span class="option-desc">Joelhos, quadris ou pulsos que doem com frequência</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Dores constantes com inchaço visível</span>
+            <span class="option-desc">Artrite, fibromialgia ou diagnóstico similar</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(3)">← Voltar</button>
+        <button class="btn-next" id="next3" disabled onclick="nextQuestion(3)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 4 -->
+    <div class="question-card" data-q="4">
+      <div class="q-number">Pergunta 04 / 10</div>
+      <div class="q-title">Como está a saúde da sua pele?</div>
+      <div class="q-subtitle">A pele é o reflexo do que acontece dentro do organismo. Ela é o terceiro órgão de eliminação.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Pele equilibrada, luminosa e sem reatividade</span>
+            <span class="option-desc">Poucas ou nenhuma ocorrência de acne ou irritação</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Pele levemente oleosa, acne ocasional ou secura</span>
+            <span class="option-desc">Alguma reatividade em períodos de estresse ou hormonais</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Acne frequente, pele vermelha, eczema ou psoríase leve</span>
+            <span class="option-desc">Reatividade constante a produtos ou alimentos</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Condição crônica de pele com inflamação intensa</span>
+            <span class="option-desc">Psoríase, eczema grave, rosácea diagnosticada</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(4)">← Voltar</button>
+        <button class="btn-next" id="next4" disabled onclick="nextQuestion(4)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 5 -->
+    <div class="question-card" data-q="5">
+      <div class="q-number">Pergunta 05 / 10</div>
+      <div class="q-title">Como é a qualidade do seu sono?</div>
+      <div class="q-subtitle">O sono é quando o corpo executa os principais processos de reparo celular e desintoxicação hepática.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Durmo 7–8 horas, acordo descansada e bem-humorada</span>
+            <span class="option-desc">Adormeço fácil, sono profundo e reparador</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Durmo bem na maioria das noites, mas com variações</span>
+            <span class="option-desc">Às vezes acordo no meio da noite ou demoro a dormir</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Sono irregular, insônia frequente ou sono superficial</span>
+            <span class="option-desc">Acordo cansada com frequência, muitos sonhos agitados</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Insônia crônica ou sono extremamente perturbado</span>
+            <span class="option-desc">Menos de 5 horas ou sono sem nenhum poder restaurador</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(5)">← Voltar</button>
+        <button class="btn-next" id="next5" disabled onclick="nextQuestion(5)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 6 -->
+    <div class="question-card" data-q="6">
+      <div class="q-number">Pergunta 06 / 10</div>
+      <div class="q-title">Como está seu humor, foco e clareza mental?</div>
+      <div class="q-subtitle">A inflamação cerebral (neuroinflamação) manifesta-se como névoa mental, irritabilidade e ansiedade.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Foco excelente, humor estável e mente clara</span>
+            <span class="option-desc">Raramente sinto ansiedade ou irritabilidade sem motivo</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Oscilações de humor ocasionais ou névoa mental leve</span>
+            <span class="option-desc">Às vezes difícil de concentrar, especialmente no estresse</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Névoa mental frequente, irritabilidade ou ansiedade habitual</span>
+            <span class="option-desc">Dificuldade de manter o foco, memória comprometida</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Ansiedade intensa, depressão ou brain fog severo</span>
+            <span class="option-desc">Impacto significativo no trabalho e relacionamentos</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(6)">← Voltar</button>
+        <button class="btn-next" id="next6" disabled onclick="nextQuestion(6)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 7 -->
+    <div class="question-card" data-q="7">
+      <div class="q-number">Pergunta 07 / 10</div>
+      <div class="q-title">Você tem sensibilidades ou reações a alimentos?</div>
+      <div class="q-subtitle">Sensibilidades alimentares indicam permeabilidade intestinal aumentada — porta de entrada para inflamação sistêmica.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Nenhuma sensibilidade alimentar conhecida</span>
+            <span class="option-desc">Como de tudo sem reações adversas</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Reação leve a 1–2 alimentos (glúten, laticínio, etc.)</span>
+            <span class="option-desc">Pequeno incômodo que consigo controlar</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Múltiplas sensibilidades, reações após várias refeições</span>
+            <span class="option-desc">Inchaço, cansaço ou sintomas na pele após comer</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Alergia ou intolerância graves, reações intensas frequentes</span>
+            <span class="option-desc">Anáfilaxia, doença celíaca ou múltiplas intolerâncias graves</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(7)">← Voltar</button>
+        <button class="btn-next" id="next7" disabled onclick="nextQuestion(7)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 8 -->
+    <div class="question-card" data-q="8">
+      <div class="q-number">Pergunta 08 / 10</div>
+      <div class="q-title">Como está seu ciclo hormonal e peso corporal?</div>
+      <div class="q-subtitle">Inflamação crônica desregula hormônios, dificulta perda de peso e intensifica sintomas do ciclo.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Ciclo regular, peso estável sem grande esforço</span>
+            <span class="option-desc">Hormônios equilibrados, sem TPM intensa</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">TPM leve, peso oscila levemente na fase pré-menstrual</span>
+            <span class="option-desc">Retenção de líquido ou desejo por açúcar no período</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">TPM intensa, dificuldade de perder peso, ciclo irregular</span>
+            <span class="option-desc">Estrogênio dominante, resistência insulínica ou SOP</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Desequilíbrio hormonal grave, obesidade ou amenorreia</span>
+            <span class="option-desc">Diagnóstico hormonal sério, menopausa precoce ou endometriose</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(8)">← Voltar</button>
+        <button class="btn-next" id="next8" disabled onclick="nextQuestion(8)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 9 -->
+    <div class="question-card" data-q="9">
+      <div class="q-number">Pergunta 09 / 10</div>
+      <div class="q-title">Com que frequência você adoece ou tem infecções?</div>
+      <div class="q-subtitle">Um sistema imunológico sobrecarregado pela inflamação crônica tem menos recursos para defesa.</div>
+      <div class="options">
+        <button class="option-btn" data-score="0" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Raramente adoeço (menos de 1x por ano)</span>
+            <span class="option-desc">Imunidade forte, recuperação rápida quando ocorre</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="1" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">1–2 gripes ou infecções por ano</span>
+            <span class="option-desc">Recupero bem, sem complicações</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="2" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Infecções frequentes (3–4 por ano) ou recuperação lenta</span>
+            <span class="option-desc">Candidíase, sinusite ou infecções urinárias recorrentes</span>
+          </span>
+        </button>
+        <button class="option-btn" data-score="3" onclick="selectOption(this)">
+          <span class="option-dot"></span>
+          <span class="option-text">
+            <span class="option-label">Imunidade muito baixa, infecções constantes</span>
+            <span class="option-desc">Adoeço com muita facilidade e demoro a melhorar</span>
+          </span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(9)">← Voltar</button>
+        <button class="btn-next" id="next9" disabled onclick="nextQuestion(9)">Próxima →</button>
+      </div>
+    </div>
+
+    <!-- PERGUNTA 10 — LÍNGUA AYURVÉDICA -->
+    <div class="question-card" data-q="10">
+      <div class="q-number">Pergunta 10 / 10 · Diagnóstico Especial</div>
+      <div class="q-title">Leitura da Língua — Diagnóstico Ayurvédico</div>
+      <div class="q-subtitle">Vá ao espelho agora, coloque a língua para fora e observe com atenção. No Ayurveda, a língua é um mapa do estado interno do organismo.</div>
+
+      <div class="tongue-card">
+        <div class="tongue-title">Como está a SUPERFÍCIE da sua língua?</div>
+        <div class="tongue-subtitle">Olhe a cor, a saburra (camada branca), a forma e a umidade</div>
+        <div class="tongue-grid" id="tongueOptions">
+          <button class="tongue-opt" data-score="0" data-tongue="rosa-limpa" onclick="selectTongue(this)">
+            <span class="tongue-emoji">🌸</span>
+            <span class="tongue-name">Rosa, limpa e úmida</span>
+            <span class="tongue-meaning">Língua saudável · Doshas equilibrados · Boa digestão e pouca toxina (ama)</span>
+          </button>
+          <button class="tongue-opt" data-score="1" data-tongue="saburra-branca" onclick="selectTongue(this)">
+            <span class="tongue-emoji">🤍</span>
+            <span class="tongue-name">Saburra branca ou leitosa</span>
+            <span class="tongue-meaning">Excesso de Kapha · Toxinas digestivas (ama) acumuladas · Digestão lenta</span>
+          </button>
+          <button class="tongue-opt" data-score="2" data-tongue="saburra-amarela" onclick="selectTongue(this)">
+            <span class="tongue-emoji">💛</span>
+            <span class="tongue-name">Saburra amarela ou esverdeada</span>
+            <span class="tongue-meaning">Excesso de Pitta · Calor hepático e biliar · Inflamação ativa no fígado</span>
+          </button>
+          <button class="tongue-opt" data-score="2" data-tongue="vermelha-inflamada" onclick="selectTongue(this)">
+            <span class="tongue-emoji">🔴</span>
+            <span class="tongue-name">Vermelha, inflamada ou com pontos</span>
+            <span class="tongue-meaning">Pitta em excesso severo · Inflamação sistêmica intensa · Sangue aquecido</span>
+          </button>
+          <button class="tongue-opt" data-score="2" data-tongue="rachada-seca" onclick="selectTongue(this)">
+            <span class="tongue-emoji">🏜️</span>
+            <span class="tongue-name">Rachada, seca ou com sulcos</span>
+            <span class="tongue-meaning">Excesso de Vata · Desidratação celular · Sistema nervoso sobrecarregado</span>
+          </button>
+          <button class="tongue-opt" data-score="1" data-tongue="marcas-dentes" onclick="selectTongue(this)">
+            <span class="tongue-emoji">〰️</span>
+            <span class="tongue-name">Bordas com marcas dos dentes</span>
+            <span class="tongue-meaning">Kapha elevado · Retenção de líquidos · Intestino congestionado</span>
+          </button>
+          <button class="tongue-opt" data-score="3" data-tongue="escura-roxa" onclick="selectTongue(this)">
+            <span class="tongue-emoji">🫐</span>
+            <span class="tongue-name">Escura, arroxeada ou acinzentada</span>
+            <span class="tongue-meaning">Circulação comprometida · Ama profundo (toxinas antigas) · Estagnação grave</span>
+          </button>
+          <button class="tongue-opt" data-score="1" data-tongue="palida" onclick="selectTongue(this)">
+            <span class="tongue-emoji">🤍</span>
+            <span class="tongue-name">Pálida, sem cor</span>
+            <span class="tongue-meaning">Vata/deficiência de sangue · Anemia possível · Baixa vitalidade</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn-back" onclick="prevQuestion(10)">← Voltar</button>
+        <button class="btn-next" id="next10" disabled onclick="showResult()">Ver meu resultado →</button>
+      </div>
+    </div>
+
+  </div><!-- /quiz -->
+
+  <!-- ═══ RESULTADO ═══ -->
+  <div id="result">
+    <div class="result-hero" id="resultHero">
+      <div class="result-circle" id="resultCircle">
+        <span class="result-score" id="resultScore"></span>
+        <span class="result-max">de 30 pts</span>
+      </div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-desc" id="resultDesc"></div>
+    </div>
+
+    <div class="result-blocks">
+
+      <div class="r-block">
+        <div class="r-block-header">
+          <div class="r-icon" style="background:#f0f5ff;">🔬</div>
+          <div class="r-block-title">O que esse resultado significa?</div>
+        </div>
+        <p id="resultMeaning"></p>
+      </div>
+
+      <div class="tongue-result-box" id="tongueResultBox">
+        <h4>🌿 Sua Língua no Ayurveda</h4>
+        <p id="tongueResultText"></p>
+      </div>
+
+      <div class="r-block">
+        <div class="r-block-header">
+          <div class="r-icon" style="background:#fff5f0;">🌿</div>
+          <div class="r-block-title">Próximos passos recomendados</div>
+        </div>
+        <ul id="resultSteps"></ul>
+      </div>
+
+      <div class="r-block">
+        <div class="r-block-header">
+          <div class="r-icon" style="background:#f5fff5;">⚠️</div>
+          <div class="r-block-title">Sinais de atenção para você</div>
+        </div>
+        <p id="resultWarning"></p>
+      </div>
+
+    </div>
+
+    <div class="cta-box">
+      <h3>Pronta para transformar sua saúde?</h3>
+      <p>Agora que você conhece seu nível de inflamação, é hora de agir. No Portal InLuz você encontra protocolos naturais completos, com chás, shots, alimentação e suporte profissional personalizado.</p>
+      <a class="cta-btn" href="https://www.instagram.com/mariahcarolined" target="_blank">Conhecer o Portal InLuz →</a>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Aviso importante:</strong> Este teste tem caráter educativo e não substitui avaliação médica ou de profissional de saúde habilitado. Os resultados são orientativos. Em caso de sintomas graves, consulte um médico.
+    </div>
+  </div><!-- /result -->
+
+</div><!-- /container -->
+
+<footer>
+  <strong>Portal InLuz</strong> · Mariah Caroline · Naturopatia & Saúde Feminina<br/>
+  <span style="font-size:11px;">© 2026 · Todos os direitos reservados</span>
+</footer>
+
+<script>
+  const scores = {};
+  let tongueChoice = null;
+
+  const tongueInterpretations = {
+    'rosa-limpa': 'Sua língua está saudável — rosa, limpa e úmida. No Ayurveda isso indica que os três doshas (Vata, Pitta e Kapha) estão razoavelmente equilibrados e há pouco ama (toxinas) acumulado no organismo. Continue mantendo seus hábitos!',
+    'saburra-branca': 'A saburra branca indica acúmulo de ama — toxinas digestivas — especialmente relacionadas ao dosha Kapha. Isso sinaliza digestão lenta, metabolismo reduzido e possível disbiose intestinal. Chás digestivos com gengibre, funcho e erva-doce são seus aliados.',
+    'saburra-amarela': 'A camada amarela ou esverdeada aponta para excesso de Pitta — calor e inflamação concentrados no fígado e na vesícula biliar. Indica sobrecarga hepática e possível refluxo biliar. Priorize chás de alcachofra, dente-de-leão e alimentos refrescantes.',
+    'vermelha-inflamada': 'A língua vermelha e inflamada é um sinal claro de Pitta elevado e inflamação sistêmica ativa. O sangue está "aquecido", com excesso de citocinas pró-inflamatórias. Requer atenção imediata: elimine açúcar, álcool, frituras e inicie um protocolo anti-inflamatório.',
+    'rachada-seca': 'Rachaduras e secura indicam Vata em excesso — desequilíbrio do sistema nervoso e desidratação celular profunda. O corpo precisa de hidratação, gorduras boas (abacate, azeite, ghee), descanso e redução do estresse. Chás adaptogênicos como ashwagandha são indicados.',
+    'marcas-dentes': 'As marcas dos dentes nas bordas indicam Kapha elevado com retenção de líquidos e congestionamento intestinal. O sistema linfático está sobrecarregado. Movimentos físicos, dry brushing, chás diuréticos e drenantes são essenciais.',
+    'escura-roxa': 'A coloração escura ou arroxeada é um sinal sério de estagnação: circulação comprometida, ama antigo acumulado nas profundezas dos tecidos. Indica toxinas crônicas de longa data. Consulte um profissional e inicie um protocolo de detox supervisionado.',
+    'palida': 'A língua pálida revela deficiência de sangue (no olhar ayurvédico, Vata predominante com baixa vitalidade). Anemia, baixa absorção de nutrientes ou exaustão do sistema reprodutor feminino. Priorize alimentos e plantas que nutrem o sangue: beterraba, tâmara, shatavari.'
+  };
+
+  function selectOption(btn) {
+    const card = btn.closest('.question-card');
+    const q = card.dataset.q;
+    card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    scores[q] = parseInt(btn.dataset.score);
+    document.getElementById('next' + q).disabled = false;
+    updateProgress();
+  }
+
+  function selectTongue(btn) {
+    document.querySelectorAll('.tongue-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    tongueChoice = btn.dataset.tongue;
+    scores['10'] = parseInt(btn.dataset.score);
+    document.getElementById('next10').disabled = false;
+    updateProgress();
+  }
+
+  function nextQuestion(current) {
+    document.querySelector('[data-q="' + current + '"]').classList.remove('active');
+    document.querySelector('[data-q="' + (current + 1) + '"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateProgress();
+  }
+
+  function prevQuestion(current) {
+    document.querySelector('[data-q="' + current + '"]').classList.remove('active');
+    document.querySelector('[data-q="' + (current - 1) + '"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    const answered = Object.keys(scores).length;
+    const pct = (answered / 10) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = answered + ' de 10';
+  }
+
+  function showResult() {
+    const total = Object.values(scores).reduce((a, b) => a + b, 0);
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('progressWrap').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    document.getElementById('resultScore').textContent = total;
+
+    const hero = document.getElementById('resultHero');
+    const title = document.getElementById('resultTitle');
+    const desc = document.getElementById('resultDesc');
+    const meaning = document.getElementById('resultMeaning');
+    const steps = document.getElementById('resultSteps');
+    const warning = document.getElementById('resultWarning');
+
+    if (total <= 7) {
+      hero.className = 'result-hero level-low';
+      title.textContent = 'Inflamação Baixa — Ótimo!';
+      desc.textContent = 'Seu organismo está em boa forma. Você apresenta poucos sinais de inflamação crônica e seu corpo está conseguindo se manter em equilíbrio.';
+      meaning.textContent = 'Uma pontuação baixa indica que seus órgãos de eliminação estão funcionando bem, sua microbiota está razoavelmente equilibrada e o sistema imunológico não está sobrecarregado. É um excelente ponto de partida para elevar ainda mais sua vitalidade.';
+      steps.innerHTML = '<li>Mantenha a hidratação diária (2 L de água)</li><li>Inclua alimentos anti-inflamatórios na rotina (cúrcuma, gengibre, frutas vermelhas)</li><li>Continue se movimentando e priorizando o sono</li><li>Faça um detox suave de 7 dias a cada trimestre para manutenção</li><li>Observe a língua semanalmente como monitoramento preventivo</li>';
+      warning.textContent = 'Mesmo com pontuação baixa, fique atenta a mudanças nos seus padrões. A inflamação começa silenciosamente. A prevenção é sempre o melhor protocolo.';
+    } else if (total <= 15) {
+      hero.className = 'result-hero level-mod';
+      title.textContent = 'Inflamação Moderada — Atenção!';
+      desc.textContent = 'Seu corpo está dando sinais de sobrecarga. A inflamação silenciosa já está presente e, se não trabalhada, tende a se intensificar com o tempo.';
+      meaning.textContent = 'Uma pontuação moderada indica que alguns sistemas estão sobrecarregados — provavelmente fígado, intestino ou sistema hormonal. Seu corpo está tentando compensar, mas os recursos estão sendo consumidos mais rápido do que repostos. É o momento ideal para intervir com protocolos naturais.';
+      steps.innerHTML = '<li>Inicie um protocolo de detox de 14 dias (chás + shots)</li><li>Elimine açúcar refinado, álcool e ultraprocessados por 21 dias</li><li>Priorize sono de qualidade (antes das 23h)</li><li>Inclua práticas de gestão do estresse (meditação, respiração, yoga)</li><li>Agende avaliação com naturólogo ou nutricionista funcional</li>';
+      warning.textContent = 'Não ignore os sinais. Inflamação moderada crônica é o terreno fértil para doenças autoimunes, desequilíbrios hormonais graves e ganho de peso resistente. Agir agora é muito mais simples do que tratar depois.';
+    } else if (total <= 22) {
+      hero.className = 'result-hero level-high';
+      title.textContent = 'Inflamação Alta — Prioridade!';
+      desc.textContent = 'Seu organismo está em estado de inflamação sistêmica elevada. Vários sistemas estão sobrecarregados e pedindo socorro ao mesmo tempo.';
+      meaning.textContent = 'Alta pontuação indica que a inflamação já está afetando múltiplos sistemas simultaneamente: imunológico, digestivo, hormonal e/ou neurológico. O corpo está em modo de sobrevivência crônica, com altos níveis de cortisol e citocinas inflamatórias. Isso não surgiu de um dia para o outro — e a resolução também exige tempo e dedicação.';
+      steps.innerHTML = '<li>PRIORIDADE: iniciar protocolo de detox de 21 dias imediatamente</li><li>Busque avaliação médica para check-up completo (PCR, VHS, vitamina D, perfil hormonal)</li><li>Eliminar glúten e laticínios por pelo menos 30 dias para avaliar impacto</li><li>Trabalhar o eixo intestino-cérebro: probióticos, L-glutamina, colágeno</li><li>Reduzir drasticamente exposição a toxinas ambientais</li><li>Trabalhar estresse como prioridade — não como luxo</li>';
+      warning.textContent = 'Com essa pontuação, é essencial buscar suporte profissional qualificado além dos protocolos naturais. A inflamação alta está associada a maior risco de doenças crônicas. Você não precisa de mais força de vontade — precisa de um protocolo estruturado e apoio especializado.';
+    } else {
+      hero.className = 'result-hero level-alarm';
+      title.textContent = 'Inflamação Crítica — Cuide-se Agora';
+      desc.textContent = 'Seu organismo está em estado de alarme. A inflamação crônica está comprometendo profundamente sua qualidade de vida e saúde.';
+      meaning.textContent = 'Pontuação crítica indica que o organismo está sobrecarregado há muito tempo. O sistema imunológico está em hiperatividade ou esgotamento, os órgãos emunctórios estão sobrecarregados e a carga tóxica supera a capacidade de eliminação natural. Isso pode estar mascarado por adaptação — a sensação de que "sempre foi assim" — mas não precisa continuar sendo.';
+      steps.innerHTML = '<li>URGENTE: procure avaliação médica completa antes de iniciar qualquer protocolo intenso</li><li>Exames essenciais: PCR ultrassensível, VHS, cortisol salivar, perfil hormonal, vitamina D, B12, ferritina</li><li>Iniciar detox SUAVE e gradual — não intenso (a crise de detox pode ser perigosa)</li><li>Suporte emocional e psicológico: o corpo não inflama sozinho</li><li>Dormir 8 horas como prioridade absoluta</li><li>Alimentação anti-inflamatória supervisionada por nutricionista</li>';
+      warning.textContent = 'Com essa pontuação, por favor, não tente se tratar sozinha. A combinação de suporte médico + naturopatia + cuidado emocional é o caminho mais seguro e eficaz. Você merece cuidado especializado e isso é um ato de amor próprio, não de fraqueza.';
+    }
+
+    // língua
+    const tongueBox = document.getElementById('tongueResultText');
+    if (tongueChoice && tongueInterpretations[tongueChoice]) {
+      tongueBox.textContent = tongueInterpretations[tongueChoice];
+    } else {
+      tongueBox.textContent = 'Continue observando sua língua diariamente — ela é um mapa fiel do seu estado interno.';
+    }
+  }
+</script>
+</body>
+</html>
