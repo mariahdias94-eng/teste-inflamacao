@@ -1156,7 +1156,8 @@
   window.addEventListener('message', function(e) {
     if (e.data && typeof e.data.raizCoroaHeight === 'number') {
       const ifr = document.getElementById('raizCoroaFrame');
-      if (ifr) ifr.style.height = e.data.raizCoroaHeight + 'px';
+      const h = Math.min(Math.max(e.data.raizCoroaHeight, 800), 8000);
+      if (ifr) ifr.style.height = h + 'px';
     }
   });
 
