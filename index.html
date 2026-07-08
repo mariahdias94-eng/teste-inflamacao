@@ -370,10 +370,10 @@
     }
     .raiz-coroa-embed iframe {
       width: 100%;
-      border: none;
+      border: 1px solid #e8dfd3;
       display: block;
       border-radius: 20px;
-      overflow: hidden;
+      box-shadow: 0 8px 28px var(--shadow);
     }
 
     /* ─── RESULT ─── */
@@ -1058,7 +1058,7 @@
 
     <div class="raiz-coroa-embed">
       <div class="raiz-coroa-label">✦ Convite especial pra você ✦</div>
-      <iframe id="raizCoroaFrame" data-src="https://mariahcaroline.com/da-raiz-a-coroa.html" title="Da Raiz à Coroa — Evento Inluz" style="height:1400px"></iframe>
+      <iframe id="raizCoroaFrame" data-src="https://mariahcaroline.com/da-raiz-a-coroa.html" title="Da Raiz à Coroa — Evento Inluz" style="height:820px"></iframe>
     </div>
   </div><!-- /result -->
 
@@ -1152,14 +1152,6 @@
     document.getElementById('leadGate').style.display = 'none';
     showResult();
   }
-
-  window.addEventListener('message', function(e) {
-    if (e.data && typeof e.data.raizCoroaHeight === 'number') {
-      const ifr = document.getElementById('raizCoroaFrame');
-      const h = Math.min(Math.max(e.data.raizCoroaHeight, 800), 8000);
-      if (ifr) ifr.style.height = h + 'px';
-    }
-  });
 
   function showResult() {
     const total = Object.values(scores).reduce((a, b) => a + b, 0);
